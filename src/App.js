@@ -25,7 +25,11 @@ const App = () => {
 
   const fetchData = async () => {
     await axios
-      .get(`http://localhost:3000/restaurants`)
+      .get(`http://localhost:3000/restaurants?limit=1`, {
+        params: {
+          _limit: 1
+        }
+      })
       .then((res) => setRestaurants(res.data))
       .catch((err) => console.log(err));
   };
