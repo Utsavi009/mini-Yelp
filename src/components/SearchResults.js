@@ -16,10 +16,12 @@ const SearchResults = ({ searchData }) => {
     <div>
       {searchData && searchData.filter(data=> cityName ? cityName === data.cityId.name : data)
       .map((data, index) => {
-          return cityName ? 
-           (<div>No matching found</div>) :
-           (
-            <div>
+          console.log(data._id)
+          
+          return !cityName ? 
+          (
+              <div className='search-result'>
+            <div className="single-restaurant">
                 <Card key={index}>
                 <CardImg
                   top
@@ -29,11 +31,16 @@ const SearchResults = ({ searchData }) => {
                 />
                 <CardBody>
                   <CardTitle tag="h5">{data.name}</CardTitle>
-                  <Link exact to={`/restaurants/${data._id}`}><button>Read More</button></Link>
+                  <Link exact to={`/restaurants/${data._id}`}>
+                      <button className="moreBut">Read More</button>
+                      </Link>
                 </CardBody>
               </Card>
             </div>
-        ) 
+            </div>
+        ) :
+           (<div>No matches found</div>) 
+          
       })}
     </div>
   );

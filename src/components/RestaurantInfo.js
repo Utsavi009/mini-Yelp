@@ -27,8 +27,9 @@ const RestaurantInfo = ({ restaurants }) => {
           console.log(restaurant.longitude)
           return !id ? (
             <div>
-              <Card key={index}>
+              <Card className="resInfo" key={index}>
                 <CardImg
+                  className="infoImg"
                   top
                   width="20%"
                   src={restaurant.img}
@@ -37,7 +38,7 @@ const RestaurantInfo = ({ restaurants }) => {
                 <CardBody>
                   <CardTitle tag="h5">{restaurant.name}</CardTitle>
                   <Link exact to={`/restaurants/${restaurant._id}`}>
-                    <button>Read More</button>
+                    <button className="moreBut">Read More</button>
                   </Link>
                 </CardBody>
               </Card>
@@ -53,15 +54,15 @@ const RestaurantInfo = ({ restaurants }) => {
                     alt="Card image cap"
                   />
                   <CardBody>
-                    <CardTitle tag="h5">{restaurant.name}</CardTitle>
-                    <CardSubtitle tag="h6" className="mb-2 text-muted">
+                    <CardTitle tag="h2">{restaurant.name}</CardTitle>
+{/*                     <CardSubtitle tag="h6" className="mb-2 text-muted">
                       City
-                    </CardSubtitle>
-                    <CardText>{restaurant.cityId.name}</CardText>
+                    </CardSubtitle> */}
+                    <CardText className="textcenter">{restaurant.cityId.name}</CardText>
                     <CardSubtitle tag="h6" className="mb-2 text-muted">
-                      Deacription:
+                      Description:
                     </CardSubtitle>
-                    <CardText>{restaurant.description}</CardText>
+                    <CardText className="textcenter">{restaurant.description}</CardText>
                   </CardBody>
                 </Card>
               </div>
@@ -73,6 +74,7 @@ const RestaurantInfo = ({ restaurants }) => {
                   zoom={14}
                   scrollWheelZoom={false}
                   dragging={true}
+                  closePopupOnClick={false}
                 >
 
                   <TileLayer
