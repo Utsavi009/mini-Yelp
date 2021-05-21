@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 //import 'bootstrap/dist/css/bootstrap.css';
 
 import App from './App';
+import SearchResults from './components/SearchResults';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
+    <SearchResults />
   </React.StrictMode>,
   document.getElementById('root')
 );

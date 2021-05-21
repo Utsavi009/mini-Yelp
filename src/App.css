@@ -6,6 +6,7 @@
 
 body {
   background-color: lightblue;
+  margin: 0;
   
 }
 
@@ -19,7 +20,7 @@ body {
 input {
   border-radius: 5px;
   text-decoration: none;
-  margin: 10px;
+  margin: 6px;
   border: none;
   padding: 5px;
 }
@@ -28,4 +29,16 @@ input {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
+}
+
+.topnav {
+  display: flex;
+  flex: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(0, 0, 0, .05);
+}
+
+.topnavspacer {
+  margin: 1em;
 }
