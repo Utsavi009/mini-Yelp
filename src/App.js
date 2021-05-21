@@ -1,26 +1,24 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import SearchBar from "./components/SearchBar";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import logo from "./art/logo/logo_long_v01.svg";
 import {
   Card,
   CardImg,
-  CardText,
   CardBody,
   CardTitle,
-  CardSubtitle,
-  Button,
 } from "reactstrap";
 import RestaurantInfo from './components/RestaurantInfo';
+import SearchResults from "./components/SearchResults";
+import JumboImage from './components/JumboImage';
 
 
 const App = () => {
 
   const [restaurants, setRestaurants] = useState([]);
-  
-  console.log(restaurants)
+  const [tags, setTags] = useState("");
+  const [cityName, setCityName] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -39,21 +37,46 @@ const App = () => {
 
     const fetchData = async () => {
     await axios
-      .get(`http://localhost:3000/restaurants`)
-      .then((res) => setRestaurants(res.data))
-      .catch((err) => console.log(err));
+      .get(`https://crossover-yelp.herokuapp.com/restaurants`)
+      .then((res) => setRestaurants(res.data.data))
+      .catch((err) => console.log(err))
+      
   }; 
+
 
   return (
     <div className="App bgimage">
       <Router>
-      <Link exact to="/">
-      <img src={logo} width="500" alt="grubgrub" />
-      </Link>
 
-      
-        <SearchBar />
+{/*   <JumboImage className="topsnap" /> */}
+              <div className="bg whiteoverlay">
+                <div>
+                    <Link exact to="/">
+                    <img src={logo} className="logosize dropshadow" /* width="500"  */alt="grubgrub" />
+                    {/* <p>Find Good Eats</p>   */}
+                    </Link>
+                </div>  
+                <div> 
+                      {/* <input
+                        type="text"
+                        placeholder="Search by Food"
+                        onChange={(e) => setTags(e.target.value)}
+                      /> */}
+                      <input
+                        type="text"
+                        placeholder="Search by City"
+                        onChange={(e) => setCityName(e.target.value)}
+                      />
+                      <Link exact to={`/restaurantsList/${cityName}`}>
+                        {" "}
+                        <button onClick={fetchData}>Search</button>{" "}
+                      </Link>
+                  </div>
+              </div>
         <Switch>
+         <Route exact path="/restaurantsList/:city?">
+            <SearchResults searchData={restaurants}/>
+          </Route> 
         <Route exact path="/restaurants/:id?">
             <RestaurantInfo restaurants={restaurants} />
           </Route>
@@ -67,7 +90,7 @@ const App = () => {
                     <Card key={index}>
                   <CardImg
                     top
-                    width="20%"
+                    width="30%"
                     src={restaurant.img}
                     alt="Card image cap"
                   />
