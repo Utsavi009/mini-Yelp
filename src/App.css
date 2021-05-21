@@ -1,12 +1,11 @@
 .App {
   text-align: center;
+  font-family: monospace;
+  color: darkslategray;
 }
-
-
 
 body {
   background-color: lightblue;
-  
 }
 
 .bgimage {
@@ -24,8 +23,101 @@ input {
   padding: 5px;
 }
 
-.restaurant-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
+.searchBut {
+  width: 120px;
+  height: 30px;
+  color: #4ba33a;
+  background-color: white;
+  font-family: monospace;
+  border: #4ba33a solid 2px;
+  border-radius: 5px;
 }
+
+.searchBut:hover {
+  color: white;
+  background-color: #4ba33a;
+  border: solid 3px white;
+}
+
+.restaurant-list {
+  /* display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;   */
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  margin-left: 5px;
+  /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s; */
+
+  /* width: 200px; */
+  /* height 1200px; */
+}
+
+.single-restaurant {
+  display: flex;
+  justify-content: space-around;
+  height: 350px;
+  max-width: 200px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.single-restaurant:hover {
+  height: 120%;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.single-img {
+  width: 90%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.moreBut {
+  width: 100px;
+  height: 60px;
+  background-color: white;
+  font-family: monospace;
+  border: #4ba33a solid 2px;
+  border-radius: 5px;
+  color: #4ba33a;
+}
+
+.moreBut:hover {
+  color: white;
+  background-color: #4ba33a;
+  border: 3px solid white;
+}
+
+.resInfo {
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+  height: 400px;
+  width: 70%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.resInfo:hover {
+  width: 100%;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.infoImg {
+  display: flex;
+  justify-content: left;
+  width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 5px;
+}
+

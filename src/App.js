@@ -1,12 +1,13 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import searchBar from "./components/searchbar";
 import SearchBar from "./components/searchbar";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import logo from "./art/logo/logo_long_v01.svg";
-import Restaurant from "./components/restaurantpage";
-import Results from "./components/resultpage";
+import data from "./db.js";
+// import Restaurant from "./components/restaurantpage";
+// import Results from "./components/resultpage";
+// import logo from "./art/logo/logo_long_v01.svg";
 import {
   Card,
   CardImg,
@@ -16,71 +17,82 @@ import {
   CardSubtitle,
   Button,
 } from "reactstrap";
+import RestaurantInfo from "./components/RestaurantInfo";
 
 const App = () => {
-  const [restaurants, setRestaurants] = useState([]);
+  const [restaurants, setRestaurants] = useState(data.restaurants);
+  const [city, setCity] = useState(data.city);
+
+  console.log(restaurants);
+  console.log(city);
 
   useEffect(() => {
     fetchData();
   }, []);
 
+
   const fetchData = async () => {
     await axios
-      .get(`http://localhost:3000/restaurants?limit=1`, {
+      .get(`http://localhost:3000/restaurants?limit=4`, {
         params: {
-          _limit: 1,
+          _limit: 4,
         },
       })
       .then((res) => setRestaurants(res.data))
       .catch((err) => console.log(err));
   };
+ 
+  //   const fetchData = async () => {
+  //   await axios
+  //     .get(`http://localhost:3000/restaurants`)
+  //     .then((res) => setRestaurants(res.data))
+  //     .catch((err) => console.log(err));
+  // };
 
   return (
     <div className="App bgimage">
-      <h1>Welcome to grubgrub!</h1>
-      <img src={logo} width="500" alt="grubgrub" />
-      <SearchBar />
-
       <Router>
+        <Link exact to="/">
+          <img src={logo} width="500" alt="grubgrub" />
+        </Link>
+        <SearchBar />
         <Switch>
-          <Route path="/" exact components={Home} />
-          <Route path="/restaurant" component={Restaurant} />
-          <Route path="/results" component={Results} />
-        </Switch>
-      </Router>
-
-      {/*       <Router>
-        <Switch>
-          <Route exact path = '/restaurants'>
-            <Restaurants />
+          <Route exact path="/restaurants/:id?">
+            <RestaurantInfo restaurants={restaurants} />
           </Route>
         </Switch>
-      </Router> */}
-      <div className="restaurant-list">
-        {restaurants &&
-          restaurants.map((restaurant, index) => {
-            return (
-              <div>
-                <Card key={index}>
-                  <CardImg
-                    top
-                    width="20%"
-                    src="/assets/318x180.svg"
-                    alt="Card image cap"
-                  />
-                  <CardBody>
-                    <CardTitle tag="h5">{restaurant.name}</CardTitle>
-                    <CardSubtitle tag="h6" className="mb-2 text-muted">
-                      Card subtitle
-                    </CardSubtitle>
-                    <CardText>Located in ..</CardText>
-                    <Button>ReadMore</Button>
-                  </CardBody>
-                </Card>
-              </div>
-            );
-          })}
-      </div>
+
+        <Switch>
+          <Route exact path="/">
+            <div className="restaurant-list">
+              {restaurants &&
+                restaurants.map((restaurant, index) => {
+                  return (
+                    <div className="single-restaurant">
+                      <Card key={index}>
+                        <CardImg className="single-img"
+                          top
+                          // height=" 30%"
+                          width="40%"
+                          object-fit="contain"
+                          src={restaurant.img}
+                          alt="Card image cap"
+                        />
+                        <CardBody>
+                          <CardTitle tag="h5">{restaurant.name}</CardTitle>
+
+                          <Link exact to={`/restaurants/${restaurant._id}`}>
+                            <button className="moreBut">Read More</button>
+                          </Link>
+                        </CardBody>
+                      </Card>
+                    </div>
+                  );
+                })}
+            </div>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 };
