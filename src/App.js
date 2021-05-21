@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import searchBar from "./components/searchbar";
 import SearchBar from "./components/searchbar";
-import { Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import logo from "./art/logo/logo_long_v01.svg";
-import Restaurants from "./components/restaurantpage";
+import Restaurant from "./components/restaurantpage";
+import Results from "./components/resultpage";
 import {
   Card,
   CardImg,
@@ -27,8 +28,8 @@ const App = () => {
     await axios
       .get(`http://localhost:3000/restaurants?limit=1`, {
         params: {
-          _limit: 1
-        }
+          _limit: 1,
+        },
       })
       .then((res) => setRestaurants(res.data))
       .catch((err) => console.log(err));
@@ -39,6 +40,15 @@ const App = () => {
       <h1>Welcome to grubgrub!</h1>
       <img src={logo} width="500" alt="grubgrub" />
       <SearchBar />
+
+      <Router>
+        <Switch>
+          <Route path="/" exact components={Home} />
+          <Route path="/restaurant" component={Restaurant} />
+          <Route path="/results" component={Results} />
+        </Switch>
+      </Router>
+
       {/*       <Router>
         <Switch>
           <Route exact path = '/restaurants'>
@@ -46,35 +56,39 @@ const App = () => {
           </Route>
         </Switch>
       </Router> */}
-      <div className='restaurant-list'>
-      {restaurants &&
-        restaurants.map((restaurant, index) => {
-          return (
-            <div>
-              <Card key={index}>
-                <CardImg
-                  top
-                  width="20%"
-                  src="/assets/318x180.svg"
-                  alt="Card image cap"
-                />
-                <CardBody>
-                  <CardTitle tag="h5">{restaurant.name}</CardTitle>
-                  <CardSubtitle tag="h6" className="mb-2 text-muted">
-                    Card subtitle
-                  </CardSubtitle>
-                  <CardText>
-                    Located in ..
-                  </CardText>
-                  <Button>ReadMore</Button>
-                </CardBody>
-              </Card>
-            </div>
-          );
-        })}
-        </div>
+      <div className="restaurant-list">
+        {restaurants &&
+          restaurants.map((restaurant, index) => {
+            return (
+              <div>
+                <Card key={index}>
+                  <CardImg
+                    top
+                    width="20%"
+                    src="/assets/318x180.svg"
+                    alt="Card image cap"
+                  />
+                  <CardBody>
+                    <CardTitle tag="h5">{restaurant.name}</CardTitle>
+                    <CardSubtitle tag="h6" className="mb-2 text-muted">
+                      Card subtitle
+                    </CardSubtitle>
+                    <CardText>Located in ..</CardText>
+                    <Button>ReadMore</Button>
+                  </CardBody>
+                </Card>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
+};
+
+const Home = () => {
+  <div>
+    <h1>Welcome</h1>
+  </div>;
 };
 
 export default App;
