@@ -20,31 +20,30 @@ import {
 import RestaurantInfo from "./components/RestaurantInfo";
 
 const App = () => {
-  const [restaurants, setRestaurants] = useState(data.restaurants);
+  const [restaurants, setRestaurants] = useState();
   const [city, setCity] = useState(data.city);
 
   console.log(restaurants);
   console.log(city);
 
+  const fetchData = async () => {
+    await axios
+      .get(`https://crossover-yelp.herokuapp.com/restaurants`)
+      .then((res) => setRestaurants(res.data.data))
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-
-  const fetchData = async () => {
-    await axios
-      .get(`http://localhost:3000/restaurants?limit=4`, {
-        params: {
-          _limit: 4,
-        },
-      })
-      .then((res) => setRestaurants(res.data))
-      .catch((err) => console.log(err));
-  };
- 
-  //   const fetchData = async () => {
+  // const fetchData = async () => {
   //   await axios
-  //     .get(`http://localhost:3000/restaurants`)
+  //     .get(`http://localhost:3000/restaurants?limit=4`, {
+  //       params: {
+  //         _limit: 4,
+  //       },
+  //     })
   //     .then((res) => setRestaurants(res.data))
   //     .catch((err) => console.log(err));
   // };
@@ -66,11 +65,12 @@ const App = () => {
           <Route exact path="/">
             <div className="restaurant-list">
               {restaurants &&
-                restaurants.map((restaurant, index) => {
+                restaurants.sort(() => Math.random() - Math.random()).slice(0, 3).map((restaurant, index) => {
                   return (
-                    <div className="single-restaurant">
-                      <Card key={index}>
-                        <CardImg className="single-img"
+                    <div className="single-restaurant" key={index}>
+                      <Card>
+                        <CardImg
+                          className="single-img"
                           top
                           // height=" 30%"
                           width="40%"
@@ -96,11 +96,4 @@ const App = () => {
     </div>
   );
 };
-
-const Home = () => {
-  <div>
-    <h1>Welcome</h1>
-  </div>;
-};
-
 export default App;
